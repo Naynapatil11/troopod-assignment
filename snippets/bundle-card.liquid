@@ -1,1 +1,56 @@
+{%- assign block = block -%}
+{%- assign featured = block.settings.best_value | default: false -%}
 
+<div class="bundle-card {% if featured %}featured{% endif %}" 
+     role="article" 
+     aria-label="{{ block.settings.title | escape }} - {{ block.settings.tier | escape }}">
+  
+  <div class="bundle-tier">
+    <span class="bundle-tier-badge">{{ block.settings.tier | default: 'Standard' }}</span>
+    {% if featured %}
+      <span class="bundle-best-value" role="status" aria-label="Best value">
+        ⭐ Best Value
+      </span>
+    {% endif %}
+  </div>
+
+  <div class="bundle-content">
+    <h3 class="bundle-title">{{ block.settings.title | default: 'Bundle Deal' }}</h3>
+    <p class="bundle-description">{{ block.settings.description | default: 'Save with this bundle' }}</p>
+    
+    <ul class="bundle-features" role="list" aria-label="Bundle features">
+      {% for i in (1..4) %}
+        {% assign feature = block.settings['feature_' | append: i] %}
+        {% if feature != blank %}
+          <li role="listitem">✓ {{ feature }}</li>
+        {% endif %}
+      {% endfor %}
+      
+      {% if block.settings.feature_1 == blank and block.settings.feature_2 == blank and block.settings.feature_3 == blank and block.settings.feature_4 == blank %}
+        <li role="listitem">✓ Premium quality products</li>
+        <li role="listitem">✓ Free shipping</li>
+        <li role="listitem">✓ 30-day guarantee</li>
+      {% endif %}
+    </ul>
+    
+    <div class="bundle-pricing">
+      <div class="bundle-price">
+        <span class="bundle-amount">{{ block.settings.price | money }}</span>
+        {% if block.settings.original_price != blank %}
+          <span class="bundle-original">{{ block.settings.original_price | money }}</span>
+        {% endif %}
+      </div>
+      {% if block.settings.savings != blank %}
+        <span class="bundle-savings" aria-label="Save {{ block.settings.savings }}">
+          Save {{ block.settings.savings }}
+        </span>
+      {% endif %}
+    </div>
+    
+    <a href="{{ block.settings.button_url | default: '/cart' }}" 
+       class="bundle-btn"
+       aria-label="Add {{ block.settings.title | escape }} to cart">
+      {{ block.settings.button_text | default: 'Add to Cart' }}
+    </a>
+  </div>
+</div>
