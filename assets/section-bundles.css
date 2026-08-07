@@ -1,1 +1,237 @@
+/* ========================================
+   BUNDLES SECTION - Tiered Pricing
+   ======================================== */
 
+.bundles-section {
+  padding: 60px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.bundles-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.bundles-title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.bundles-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, #2d6a4f, #52b788);
+  margin: 16px auto 0;
+  border-radius: 2px;
+}
+
+.bundles-subtitle {
+  font-size: 1.1rem;
+  color: #4a4a4a;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.bundles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+  align-items: stretch;
+}
+
+.bundle-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid transparent;
+}
+
+.bundle-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+.bundle-card.featured {
+  border-color: #2d6a4f;
+  background: linear-gradient(135deg, #f8fff9, #ffffff);
+  transform: scale(1.02);
+}
+
+.bundle-card.featured:hover {
+  transform: scale(1.02) translateY(-4px);
+}
+
+.bundle-tier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.bundle-tier-badge {
+  display: inline-block;
+  padding: 4px 16px;
+  background: #e8f5e9;
+  color: #2d6a4f;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.bundle-best-value {
+  background: #f39c12;
+  color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.bundle-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.bundle-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+
+.bundle-description {
+  font-size: 0.95rem;
+  color: #4a4a4a;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.bundle-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  flex: 1;
+}
+
+.bundle-features li {
+  padding: 6px 0;
+  color: #1a1a1a;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bundle-features li::before {
+  content: '✓';
+  color: #2d6a4f;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.bundle-pricing {
+  margin-bottom: 20px;
+}
+
+.bundle-price {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bundle-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d6a4f;
+}
+
+.bundle-original {
+  font-size: 1rem;
+  color: #999;
+  text-decoration: line-through;
+}
+
+.bundle-savings {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #e74c3c;
+  color: #ffffff;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.bundle-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  background: #2d6a4f;
+  color: #ffffff;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  width: 100%;
+}
+
+.bundle-btn:hover {
+  background: #1b4332;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(45, 106, 79, 0.3);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #999;
+}
+
+@media (max-width: 768px) {
+  .bundles-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .bundles-section {
+    padding: 40px 16px;
+  }
+  
+  .bundle-card.featured {
+    transform: scale(1);
+  }
+  
+  .bundle-card.featured:hover {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 480px) {
+  .bundle-card {
+    padding: 24px 16px;
+  }
+  
+  .bundle-amount {
+    font-size: 1.6rem;
+  }
+  }
