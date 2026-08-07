@@ -1,1 +1,204 @@
+{{ 'section-hero.css' | asset_url | stylesheet_tag }}
 
+{%- assign hero_image = section.settings.image -%}
+{%- assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0 -%}
+
+<div class="hero-section" data-section-id="{{ section.id }}" role="banner" aria-label="Hero banner">
+  <div class="hero-container">
+    <!-- Background with Parallax -->
+    <div class="hero-background" 
+         style="background-image: url('{{ hero_image | img_url: 'master' }}');"
+         data-parallax-speed="0.5">
+      <div class="hero-overlay" style="opacity: {{ overlay_opacity }};"></div>
+    </div>
+
+    <!-- Animated Content -->
+    <div class="hero-content-wrapper">
+      <div class="hero-content" data-animate="fade-up">
+        {% if section.settings.badge_text != blank %}
+          <span class="hero-badge" data-animate="fade-up" data-delay="200">
+            {{ section.settings.badge_text }}
+          </span>
+        {% endif %}
+
+        <h1 class="hero-title" data-animate="fade-up" data-delay="400">
+          {{ section.settings.title | default: 'Clean Home, Pure Planet' }}
+        </h1>
+
+        <p class="hero-subtitle" data-animate="fade-up" data-delay="600">
+          {{ section.settings.subtitle | default: 'Plant-based homecare that actually works' }}
+        </p>
+
+        <div class="hero-actions" data-animate="fade-up" data-delay="800">
+          <a href="{{ section.settings.primary_btn_url | default: '/collections/all' }}" 
+             class="hero-btn hero-btn-primary">
+            {{ section.settings.primary_btn_text | default: 'Shop Now' }}
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          
+          {% if section.settings.secondary_btn_text != blank %}
+            <a href="{{ section.settings.secondary_btn_url | default: '#' }}" 
+               class="hero-btn hero-btn-secondary">
+              {{ section.settings.secondary_btn_text }}
+            </a>
+          {% endif %}
+        </div>
+
+        {% if section.settings.show_stats %}
+          <div class="hero-stats" data-animate="fade-up" data-delay="1000">
+            <div class="stat-item">
+              <span class="stat-number">{{ section.settings.stat_1_number | default: '10K+' }}</span>
+              <span class="stat-label">{{ section.settings.stat_1_label | default: 'Happy Customers' }}</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">{{ section.settings.stat_2_number | default: '500+' }}</span>
+              <span class="stat-label">{{ section.settings.stat_2_label | default: 'Reviews' }}</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+              <span class="stat-number">{{ section.settings.stat_3_number | default: '98%' }}</span>
+              <span class="stat-label">{{ section.settings.stat_3_label | default: 'Satisfaction' }}</span>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <span class="scroll-text">Scroll</span>
+      <div class="scroll-line">
+        <div class="scroll-progress"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Hero (Premium)",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge Text",
+      "default": "New Collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Clean Home, Pure Planet"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Plant-based homecare that actually works"
+    },
+    {
+      "type": "header",
+      "content": "Buttons"
+    },
+    {
+      "type": "text",
+      "id": "primary_btn_text",
+      "label": "Primary Button Text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "primary_btn_url",
+      "label": "Primary Button Link",
+      "default": "/collections/all"
+    },
+    {
+      "type": "text",
+      "id": "secondary_btn_text",
+      "label": "Secondary Button Text"
+    },
+    {
+      "type": "url",
+      "id": "secondary_btn_url",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Statistics"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_stats",
+      "label": "Show Statistics",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "stat_1_number",
+      "label": "Stat 1 Number",
+      "default": "10K+"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 Label",
+      "default": "Happy Customers"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_number",
+      "label": "Stat 2 Number",
+      "default": "500+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 Label",
+      "default": "Reviews"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_number",
+      "label": "Stat 3 Number",
+      "default": "98%"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 Label",
+      "default": "Satisfaction"
+    },
+    {
+      "type": "header",
+      "content": "Styling"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay Opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero (Premium)",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
