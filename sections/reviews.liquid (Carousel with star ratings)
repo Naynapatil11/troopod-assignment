@@ -1,1 +1,177 @@
+{{ 'section-reviews.css' | asset_url | stylesheet_tag }}
 
+<div class="reviews-section" data-section-id="{{ section.id }}" role="region" aria-label="Customer reviews">
+  <div class="reviews-header">
+    {% if section.settings.heading != blank %}
+      <h2 class="reviews-title">{{ section.settings.heading }}</h2>
+    {% endif %}
+    {% if section.settings.subheading != blank %}
+      <p class="reviews-subtitle">{{ section.settings.subheading }}</p>
+    {% endif %}
+    
+    <div class="reviews-summary">
+      <span class="reviews-rating">★ {{ section.settings.avg_rating | default: '4.8' }}</span>
+      <span class="reviews-count">{{ section.settings.total_reviews | default: '500+' }} reviews</span>
+    </div>
+  </div>
+
+  <div class="reviews-carousel" data-autoplay="{{ section.settings.autoplay }}" data-speed="{{ section.settings.speed }}">
+    <div class="reviews-track">
+      {% for block in section.blocks %}
+        <div class="review-slide">
+          <div class="review-card">
+            <div class="review-stars">
+              {% for i in (1..5) %}
+                {% if i <= block.settings.rating %}
+                  <span class="star filled">★</span>
+                {% else %}
+                  <span class="star empty">★</span>
+                {% endif %}
+              {% endfor %}
+            </div>
+            
+            <p class="review-text">"{{ block.settings.review_text }}"</p>
+            
+            <div class="review-author">
+              <div class="review-avatar">
+                {% if block.settings.avatar %}
+                  <img src="{{ block.settings.avatar | img_url: '50x50', crop: 'center' }}" 
+                       alt="{{ block.settings.author_name | escape }}"
+                       loading="lazy"
+                       width="40"
+                       height="40">
+                {% else %}
+                  <div class="avatar-placeholder">{{ block.settings.author_name | slice: 0 | upcase }}</div>
+                {% endif %}
+              </div>
+              <div class="review-author-info">
+                <span class="author-name">{{ block.settings.author_name }}</span>
+                <span class="author-verified">
+                  {% if block.settings.verified %}
+                    ✓ Verified Buyer
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <div class="empty-state">
+          <p>Add review blocks to display them here.</p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="carousel-controls">
+      <button class="carousel-btn prev-btn" aria-label="Previous reviews">‹</button>
+      <button class="carousel-btn next-btn" aria-label="Next reviews">›</button>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Reviews Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real reviews from real customers"
+    },
+    {
+      "type": "header",
+      "content": "Summary"
+    },
+    {
+      "type": "text",
+      "id": "avg_rating",
+      "label": "Average Rating",
+      "default": "4.8"
+    },
+    {
+      "type": "text",
+      "id": "total_reviews",
+      "label": "Total Reviews",
+      "default": "500+"
+    },
+    {
+      "type": "header",
+      "content": "Carousel Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Auto-play",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Auto-play Speed (seconds)",
+      "min": 3,
+      "max": 10,
+      "step": 1,
+      "default": 5
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Text",
+          "default": "Amazing products! Highly recommend."
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "John Doe"
+        },
+        {
+          "type": "image_picker",
+          "id": "avatar",
+          "label": "Avatar (Optional)"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified Buyer",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews Carousel",
+      "category": "Custom",
+      "blocks": [
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" },
+        { "type": "review" }
+      ]
+    }
+  ]
+}
+{% endschema %}
